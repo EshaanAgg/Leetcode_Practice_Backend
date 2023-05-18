@@ -1,0 +1,18 @@
+{
+	"name": "company_leetcode",
+	"version": "1.0.0",
+	"description": "Leetcode questions, sorted company-wise!",
+	"main": "index.js",
+	"scripts": {
+		"start": "node index.js",
+		"dev": "nodemon index.js",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "EshaanAgg",
+	"license": "ISC",
+	"dependencies": {
+		"csv": "^6.3.0",
+		"express": "^4.18.2",
+		"mongoose": "^7.1.1"
+	}
+}
