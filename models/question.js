@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
 
 const schema = mongoose.Schema({
-	leetcode_id: String,
+	leetcode_id: Number,
 	title: String,
-	acceptance: Number,
+	acceptance: String,
 	difficulty: String,
 	frequency: Number,
 	link: String,
 });
 
-module.exports = mongoose.model("question", schema);
+module.exports = mongoose.model("Question", schema);
