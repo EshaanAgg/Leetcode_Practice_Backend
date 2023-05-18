@@ -1,10 +1,48 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const Company = require("./models/company");
+const Question = require("./models/question");
 
 mongoose.connect("mongodb://localhost:27017/leetcode", { useNewUrlParser: true }).then(() => {
 	const app = express();
 
+	app.use(express.json());
+	app.use(
+		express.urlencoded({
+			extended: true,
+		})
+	);
+
 	app.listen(5000, () => {
 		console.log("Server has started!");
+	});
+
+	app.get("/company", async (req, res) => {
+		const comapnies = await Company.find().select("name").distinct("name").lean();
+		res.json(comapnies);
+	});
+
+	app.post("/time", async (req, res) => {
+		const { company } = req.body;
+		const timeline = await Company.find({
+			name: company,
+		})
+			.select("timeline")
+			.lean();
+
+		res.json(timeline.map((obj) => obj.timeline));
+	});
+
+	app.post("/questions", async (req, res) => {
+		const { company, timeline } = req.body;
+		const questions = await Company.find({
+			name: company,
+			timeline,
+		})
+			.select("questions")
+			.populate("questions")
+			.lean();
+
+		res.json(questions.map((obj) => obj.questions));
 	});
 });
