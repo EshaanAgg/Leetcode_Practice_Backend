@@ -15,7 +15,7 @@ mongoose
 				extended: true,
 			})
 		);
-		app.use(morgan("dev"));
+		app.use(morgan());
 
 		app.listen(5001, () => {
 			console.log("Server has started!");
@@ -28,6 +28,7 @@ mongoose
 
 		app.post("/time", async (req, res) => {
 			const { company } = req.body;
+			console.log(company);
 			if (!company) res.json([]);
 			else {
 				const timeline = await Company.find({
@@ -36,12 +37,14 @@ mongoose
 					.select("timeline")
 					.lean();
 
+				console.log(timeline);
 				res.json(timeline.map((obj) => obj.timeline));
 			}
 		});
 
 		app.post("/questions", async (req, res) => {
 			const { company, timeline } = req.body;
+			console.log(company, timeline);
 			if (!company || !timeline) res.json([]);
 			else {
 				const questions = await Company.find({
@@ -51,7 +54,7 @@ mongoose
 					.select("questions")
 					.populate("questions")
 					.lean();
-
+				console.log(questions);
 				res.json(questions.map((obj) => obj.questions));
 			}
 		});
